@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: digiskills-video-helper
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
