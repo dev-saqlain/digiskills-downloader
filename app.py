@@ -19,6 +19,16 @@ JOBS_DIR = DATA_DIR / "jobs"
 JOBS_DIR.mkdir(parents=True, exist_ok=True)
 
 app = Flask(__name__)
+@app.get("/version")
+def version():
+    result = subprocess.run(
+        ["python", "-m", "yt_dlp", "--version"],
+        capture_output=True,
+        text=True,
+        timeout=20
+    )
+    return {"yt_dlp_version": result.stdout.strip(),
+            "error": result.stderr.strip()}
 app.secret_key = os.environ.get("SECRET_KEY", "change-this-secret-before-deploying")
 
 jobs = {}
